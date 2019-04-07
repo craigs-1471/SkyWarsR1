@@ -1,5 +1,6 @@
 package swInterface;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class GameButton extends JButton implements ActionListener {
 	private boolean movePossible;
 	
 	public GameButton(int index, ArrayList<Integer> moves) {
+		setBackground(Color.black);
 		masterShip = new ImageIcon(this.getClass().getResource("/swResources/masterShip100.png"));
 		battleStar = new ImageIcon(this.getClass().getResource("/swResources/battleStar100.png"));
 		battleShooter = new ImageIcon(this.getClass().getResource("/swResources/battleShooter100.png"));

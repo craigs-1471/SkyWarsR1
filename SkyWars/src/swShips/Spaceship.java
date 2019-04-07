@@ -1,8 +1,10 @@
 package swShips;
 
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
-public abstract class Spaceship {
+public abstract class Spaceship implements Serializable {
 	
 	protected String shipType;
 	protected ImageIcon img;

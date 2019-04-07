@@ -1,8 +1,9 @@
 package swShips;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BattleCruiser extends Spaceship {
+public class BattleCruiser extends Spaceship implements Serializable {
 	
 	public BattleCruiser() {
 		setCurrentLocation(0);

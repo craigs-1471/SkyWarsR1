@@ -147,18 +147,27 @@ public class MainApp {
 		pnlOptionsPanel.add(lblMasterShipMode);
 		
 		JButton btnSaveGame = new JButton("Save Game");
+		btnSaveGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameData.saveGame();
+			}
+		});
 		btnSaveGame.setBounds(12, 53, 97, 25);
 		pnlOptionsPanel.add(btnSaveGame);
 		
-		JButton button = new JButton("Save Game");
-		button.setBounds(122, 13, 97, 25);
-		pnlOptionsPanel.add(button);
+		JButton btnLoadGame = new JButton("Load Game");
+		btnLoadGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameData.loadGame();
+			}
+		});
+		btnLoadGame.setBounds(122, 13, 97, 25);
+		pnlOptionsPanel.add(btnLoadGame);
 		
 		JRadioButton rdbtnOffensive = new JRadioButton("Offensive");
 		rdbtnOffensive.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GameData.setMasterShipOffensive(true);
-				System.out.println(GameData.isMasterShipOffensive());
 			}
 		});
 		buttonGroup.add(rdbtnOffensive);
@@ -169,7 +178,6 @@ public class MainApp {
 		rdbtnDefensive.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GameData.setMasterShipOffensive(false);
-				System.out.println(GameData.isMasterShipOffensive());
 			}
 		});
 		rdbtnDefensive.setSelected(true);
@@ -186,7 +194,6 @@ public class MainApp {
 		rdbtnHardMode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GameData.setHardMode(true);
-				System.out.println(GameData.isHardMode());
 			}
 		});
 		rdbtnHardMode.setBounds(304, 31, 127, 25);
@@ -197,7 +204,6 @@ public class MainApp {
 		rdbtnEasyMode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GameData.setHardMode(false);
-				System.out.println(GameData.isHardMode());
 			}
 		});
 		rdbtnEasyMode.setSelected(true);

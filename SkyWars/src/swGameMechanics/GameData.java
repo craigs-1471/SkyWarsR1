@@ -1,5 +1,11 @@
 package swGameMechanics;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -36,6 +42,53 @@ public class GameData {
 		hardMode = false;
 		shipsDestroyed = 0;
 		RenderButtons.mapButtonGridList(gridList);
+	}
+	
+	public static void saveGame() {
+		GameSave save = new GameSave(gridList, player, enemies, gameOver, usersGo, shipsDestroyed, masterShipOffensive, hardMode);
+		String fileName = "data.bin";
+		try {
+			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
+			os.writeObject(save);
+			os.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Done writing file");
+	}
+	
+	public static void loadGame() {
+		String fileName = "data.bin";
+		GameSave save = null;
+		try {
+			ObjectInputStream is = new ObjectInputStream(new FileInputStream(fileName));
+			save = (GameSave) is.readObject();
+			is.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Load complete");
+		loadGameData(save);
+	}
+	
+	public static void loadGameData(GameSave save) {
+		setGridList(save.getGridList());
+		setPlayer(save.getPlayer());
+		setEnemies(save.getEnemies());
+		setGameOver(save.isGameOver());
+		System.out.println(save.isGameOver());
+		setUsersGo(save.isUsersGo());
+		setShipsDestroyed(save.getShipsDestroyed());
+		setMasterShipOffensive(save.isMasterShipOffensive());
+		setHardMode(save.isHardMode());
+		RenderButtons.mapButtonGridList(gridList);
+		
 	}
 	
 	public static ArrayList<ArrayList<Spaceship>> randomEnemyShip(ArrayList<ArrayList<Spaceship>> gridList) {
