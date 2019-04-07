@@ -6,10 +6,12 @@ public class BattleShooter extends Spaceship {
 	
 	public BattleShooter() {
 		setCurrentLocation(0);
+		setShipType("Battle Shooter");
 	}
 	
 	public BattleShooter(ArrayList<Spaceship> enemies) {
 		setCurrentLocation(0);
 		enemies.add(this);
+		setShipType("Battle Shooter");
 	}
 }
