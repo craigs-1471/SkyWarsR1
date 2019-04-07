@@ -12,6 +12,9 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class MainApp {
 
@@ -33,6 +36,7 @@ public class MainApp {
 	private static GameButton btnGameButton14;
 	private static GameButton btnGameButton15;
 	private static JButton btnNewGame;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 
 	/**
@@ -63,7 +67,7 @@ public class MainApp {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 689, 507);
+		frame.setBounds(100, 100, 689, 552);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -121,7 +125,7 @@ public class MainApp {
 		pnlButtonPanel.add(btnGameButton15);
 		
 		JPanel pnlOptionsPanel = new JPanel();
-		pnlOptionsPanel.setBounds(12, 401, 647, 46);
+		pnlOptionsPanel.setBounds(12, 401, 647, 91);
 		frame.getContentPane().add(pnlOptionsPanel);
 		pnlOptionsPanel.setLayout(null);
 		
@@ -133,6 +137,41 @@ public class MainApp {
 		});
 		btnNewGame.setBounds(12, 13, 97, 25);
 		pnlOptionsPanel.add(btnNewGame);
+		
+		JLabel lblMasterShipMode = new JLabel("Master Ship Mode:");
+		lblMasterShipMode.setBounds(416, 13, 112, 16);
+		pnlOptionsPanel.add(lblMasterShipMode);
+		
+		JButton btnSaveGame = new JButton("Save Game");
+		btnSaveGame.setBounds(12, 53, 97, 25);
+		pnlOptionsPanel.add(btnSaveGame);
+		
+		JButton button = new JButton("Save Game");
+		button.setBounds(122, 13, 97, 25);
+		pnlOptionsPanel.add(button);
+		
+		JRadioButton rdbtnOffensive = new JRadioButton("Offensive");
+		rdbtnOffensive.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameData.setMasterShipOffensive(true);
+				System.out.println(GameData.isMasterShipOffensive());
+			}
+		});
+		buttonGroup.add(rdbtnOffensive);
+		rdbtnOffensive.setBounds(416, 31, 127, 25);
+		pnlOptionsPanel.add(rdbtnOffensive);
+		
+		JRadioButton rdbtnDefensive = new JRadioButton("Defensive");
+		rdbtnDefensive.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameData.setMasterShipOffensive(false);
+				System.out.println(GameData.isMasterShipOffensive());
+			}
+		});
+		rdbtnDefensive.setSelected(true);
+		buttonGroup.add(rdbtnDefensive);
+		rdbtnDefensive.setBounds(416, 53, 127, 25);
+		pnlOptionsPanel.add(rdbtnDefensive);
 	}
 
 	public JFrame getFrame() {
@@ -278,6 +317,4 @@ public class MainApp {
 	public static void setBtnNewGame(JButton btnNewGame) {
 		MainApp.btnNewGame = btnNewGame;
 	}
-
-	
 }

@@ -12,5 +12,6 @@ public class BattleStar extends Spaceship {
 	public BattleStar(ArrayList<Spaceship> enemies) {
 		setCurrentLocation(0);
 		enemies.add(this);
+		setShipType("Battle Star");
 	}
 }

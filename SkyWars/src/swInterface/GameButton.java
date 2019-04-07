@@ -30,10 +30,8 @@ public class GameButton extends JButton implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		System.out.println("******************Button Clicked***************************");
 		Spaceship player = GameData.getPlayer();
 		int currentLocation = player.getCurrentLocation();
-		System.out.println("GB 1. Current Location " + currentLocation);
 		movePossible = PossibleMoves.isMovePossible(currentLocation, possibleMoves);
 		boolean usersGo = GameData.isUsersGo();
 		boolean gameOver = GameData.isGameOver();
@@ -41,36 +39,21 @@ public class GameButton extends JButton implements ActionListener {
 			GameData.setUsersGo(false);
 			ArrayList<ArrayList<Spaceship>> gridList = GameData.getGridList();
 			ArrayList<Spaceship> enemies = GameData.getEnemies();
-			System.out.println("GB 2. Total enemy size " + enemies.size());
-			System.out.println("GB 3. Currernt location-list size pre-change " + gridList.get(currentLocation).size());
 			gridList.get(currentLocation).remove(player);
-			System.out.println("GB 4. Currernt location-list size post-change " + gridList.get(currentLocation).size());
-			System.out.println("GB 5. New location-list size pre-change " + gridList.get(btnIndex).size());
 			gridList.get(btnIndex).add(player);
-			System.out.println("GB 6. New location-list size post-change " + gridList.get(btnIndex).size());
 			player.setCurrentLocation(btnIndex);
-			System.out.println("GB 7. Player Change location " + player.getCurrentLocation());
 			GameData.setPlayer(player);
 			GameData.setGridList(gridList);
 			gridList = GameData.checkForEngagement(gridList, player);
-			System.out.println("GB 8. Post check for engagement 1");
 			RenderButtons.mapButtonGridList(gridList);
-			System.out.println("GB 9. Post Buttons rendered 1");
 			gridList = GameData.moveEnemies(gridList, enemies);
-			System.out.println("GB 10. post move enemies");
 			gridList = GameData.checkForEngagement(gridList, player);
-			System.out.println("GB 11. Post check for engagement 2");
 			RenderButtons.mapButtonGridList(gridList);
-			System.out.println("GB 12. Post buttons rendered 2");
 			gridList = GameData.randomEnemyShip(gridList);
-			System.out.println("GB 13. Post random ship");
 			gridList = GameData.checkForEngagement(gridList, player);
-			System.out.println("GB 14. Post check for engagement 3");
 			RenderButtons.mapButtonGridList(gridList);
-			System.out.println("GB 15. Post buttons rendered 3");
 			GameData.setPlayer(player);
 			GameData.setGridList(gridList);
-			System.out.println("GB 16. Ste gridList and player");
 			GameData.setUsersGo(true);
 		}
 		
