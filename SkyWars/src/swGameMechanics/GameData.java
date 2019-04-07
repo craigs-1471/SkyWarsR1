@@ -33,6 +33,7 @@ public class GameData {
 		gameOver = false;
 		usersGo = true;
 		masterShipOffensive = false;
+		hardMode = false;
 		shipsDestroyed = 0;
 		RenderButtons.mapButtonGridList(gridList);
 	}
@@ -62,20 +63,38 @@ public class GameData {
 		return gridList;
 	}
 	
-	public static ArrayList<ArrayList<Spaceship>> moveEnemies(ArrayList<ArrayList<Spaceship>> gridList, ArrayList<Spaceship> enemies) {
+	public static ArrayList<ArrayList<Spaceship>> moveEnemies(ArrayList<ArrayList<Spaceship>> gridList, ArrayList<Spaceship> enemies, Spaceship player) {
 		Spaceship enemy;
-		int currentLocation, numberOfMoves, newLocation, randNumber;
+		int currentLocation, numberOfMoves, newLocation, randNumber, playerLocation;
+		playerLocation = player.getCurrentLocation();
 		Random numGenerator = new Random();
 		for(int i = 0; i < enemies.size(); i++) {
 			enemy = enemies.get(i);
 			currentLocation = enemy.getCurrentLocation();
 			ArrayList<Integer> possibleMoves = PossibleMoves.getPossibleMoves(currentLocation);
-			numberOfMoves = possibleMoves.size();
-			randNumber = numGenerator.nextInt(numberOfMoves);
-			newLocation = possibleMoves.get(randNumber);
-			enemy.setCurrentLocation(newLocation);
-			gridList.get(currentLocation).remove(enemy);
-			gridList.get(newLocation).add(enemy);
+			if(isHardMode()) {
+				if(possibleMoves.contains(playerLocation)) {
+					enemy.setCurrentLocation(playerLocation);
+					gridList.get(currentLocation).remove(enemy);
+					gridList.get(playerLocation).add(enemy);
+				}
+				else {
+					numberOfMoves = possibleMoves.size();
+					randNumber = numGenerator.nextInt(numberOfMoves);
+					newLocation = possibleMoves.get(randNumber);
+					enemy.setCurrentLocation(newLocation);
+					gridList.get(currentLocation).remove(enemy);
+					gridList.get(newLocation).add(enemy);
+				}
+			}
+			else {
+				numberOfMoves = possibleMoves.size();
+				randNumber = numGenerator.nextInt(numberOfMoves);
+				newLocation = possibleMoves.get(randNumber);
+				enemy.setCurrentLocation(newLocation);
+				gridList.get(currentLocation).remove(enemy);
+				gridList.get(newLocation).add(enemy);
+			}
 		}
 		setGridList(gridList);
 		setEnemies(enemies);
@@ -129,6 +148,7 @@ public class GameData {
 		setUsersGo(false);
 		setShipsDestroyed(0);
 		setMasterShipOffensive(false);
+		setHardMode(false);
 	}
 	
 	//**********************Getters and Setters*********************************************

@@ -37,6 +37,10 @@ public class MainApp {
 	private static GameButton btnGameButton15;
 	private static JButton btnNewGame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JLabel lblDifficulty;
+	private JRadioButton rdbtnHardMode;
+	private JRadioButton rdbtnEasyMode;
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	
 
 	/**
@@ -139,7 +143,7 @@ public class MainApp {
 		pnlOptionsPanel.add(btnNewGame);
 		
 		JLabel lblMasterShipMode = new JLabel("Master Ship Mode:");
-		lblMasterShipMode.setBounds(416, 13, 112, 16);
+		lblMasterShipMode.setBounds(456, 13, 112, 16);
 		pnlOptionsPanel.add(lblMasterShipMode);
 		
 		JButton btnSaveGame = new JButton("Save Game");
@@ -158,7 +162,7 @@ public class MainApp {
 			}
 		});
 		buttonGroup.add(rdbtnOffensive);
-		rdbtnOffensive.setBounds(416, 31, 127, 25);
+		rdbtnOffensive.setBounds(456, 31, 127, 25);
 		pnlOptionsPanel.add(rdbtnOffensive);
 		
 		JRadioButton rdbtnDefensive = new JRadioButton("Defensive");
@@ -170,8 +174,35 @@ public class MainApp {
 		});
 		rdbtnDefensive.setSelected(true);
 		buttonGroup.add(rdbtnDefensive);
-		rdbtnDefensive.setBounds(416, 53, 127, 25);
+		rdbtnDefensive.setBounds(456, 53, 127, 25);
 		pnlOptionsPanel.add(rdbtnDefensive);
+		
+		lblDifficulty = new JLabel("Difficulty:");
+		lblDifficulty.setBounds(304, 13, 77, 16);
+		pnlOptionsPanel.add(lblDifficulty);
+		
+		rdbtnHardMode = new JRadioButton("Hard Mode");
+		buttonGroup_1.add(rdbtnHardMode);
+		rdbtnHardMode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameData.setHardMode(true);
+				System.out.println(GameData.isHardMode());
+			}
+		});
+		rdbtnHardMode.setBounds(304, 31, 127, 25);
+		pnlOptionsPanel.add(rdbtnHardMode);
+		
+		rdbtnEasyMode = new JRadioButton("Easy Mode");
+		buttonGroup_1.add(rdbtnEasyMode);
+		rdbtnEasyMode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameData.setHardMode(false);
+				System.out.println(GameData.isHardMode());
+			}
+		});
+		rdbtnEasyMode.setSelected(true);
+		rdbtnEasyMode.setBounds(304, 53, 127, 25);
+		pnlOptionsPanel.add(rdbtnEasyMode);
 	}
 
 	public JFrame getFrame() {

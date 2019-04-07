@@ -46,7 +46,7 @@ public class GameButton extends JButton implements ActionListener {
 			GameData.setGridList(gridList);
 			gridList = GameData.checkForEngagement(gridList, player);
 			RenderButtons.mapButtonGridList(gridList);
-			gridList = GameData.moveEnemies(gridList, enemies);
+			gridList = GameData.moveEnemies(gridList, enemies, player);
 			gridList = GameData.checkForEngagement(gridList, player);
 			RenderButtons.mapButtonGridList(gridList);
 			gridList = GameData.randomEnemyShip(gridList);
