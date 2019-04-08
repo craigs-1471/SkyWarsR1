@@ -1,6 +1,8 @@
 package swShips;
 
-public class MasterShip extends Spaceship {
+import java.io.Serializable;
+
+public class MasterShip extends Spaceship implements Serializable  {
 	
 	public MasterShip() {
 		setCurrentLocation(0);

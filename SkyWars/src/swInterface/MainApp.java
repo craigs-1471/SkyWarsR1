@@ -21,7 +21,7 @@ import javax.swing.ButtonGroup;
 
 public class MainApp implements Runnable {
 
-	private JFrame frame;
+	private JFrame frmSkyWars;
 	private static GameButton btnGameButton0;
 	private static GameButton btnGameButton1;
 	private static GameButton btnGameButton2;
@@ -46,6 +46,7 @@ public class MainApp implements Runnable {
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private static JRadioButton rdbtnOffensive;
 	private static JRadioButton rdbtnDefensive;
+	private JButton btnHighScores;
 	
 	@Override
 	public void run() {
@@ -53,7 +54,7 @@ public class MainApp implements Runnable {
 			public void run() {
 				try {
 					MainApp window = new MainApp();
-					window.frame.setVisible(true);
+					window.frmSkyWars.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -69,6 +70,8 @@ public class MainApp implements Runnable {
 		Thread t1 = new Thread(new MainApp());
 		//Thread t2 = new Thread(new Music());
 		t1.start();
+		Music musicPlayer = new Music();
+		musicPlayer.playMusic("ImperialMarch.wav");
 	}
 
 	/**
@@ -82,14 +85,15 @@ public class MainApp implements Runnable {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 689, 552);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmSkyWars = new JFrame();
+		frmSkyWars.setTitle("Sky Wars");
+		frmSkyWars.setBounds(100, 100, 689, 552);
+		frmSkyWars.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSkyWars.getContentPane().setLayout(null);
 		
 		JPanel pnlButtonPanel = new JPanel();
 		pnlButtonPanel.setBounds(12, 13, 647, 375);
-		frame.getContentPane().add(pnlButtonPanel);
+		frmSkyWars.getContentPane().add(pnlButtonPanel);
 		pnlButtonPanel.setLayout(new GridLayout(4, 4, 0, 0));
 		
 		btnGameButton0 = new GameButton(0, PossibleMoves.getBtn0Moves());
@@ -142,7 +146,7 @@ public class MainApp implements Runnable {
 		
 		JPanel pnlOptionsPanel = new JPanel();
 		pnlOptionsPanel.setBounds(12, 401, 647, 91);
-		frame.getContentPane().add(pnlOptionsPanel);
+		frmSkyWars.getContentPane().add(pnlOptionsPanel);
 		pnlOptionsPanel.setLayout(null);
 		
 		btnNewGame = new JButton("New Game");
@@ -221,14 +225,23 @@ public class MainApp implements Runnable {
 		rdbtnEasyMode.setSelected(true);
 		rdbtnEasyMode.setBounds(304, 53, 127, 25);
 		pnlOptionsPanel.add(rdbtnEasyMode);
+		
+		btnHighScores = new JButton("High Scores");
+		btnHighScores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				GameData.showHighScores();
+			}
+		});
+		btnHighScores.setBounds(121, 53, 101, 25);
+		pnlOptionsPanel.add(btnHighScores);
 	}
 
 	public JFrame getFrame() {
-		return frame;
+		return frmSkyWars;
 	}
 
 	public void setFrame(JFrame frame) {
-		this.frame = frame;
+		this.frmSkyWars = frame;
 	}
 
 	public static GameButton getBtnGameButton0() {

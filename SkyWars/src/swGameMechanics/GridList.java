@@ -7,6 +7,19 @@ import swShips.Spaceship;
 
 public class GridList {
 	
+	public static ArrayList<ArrayList<Spaceship>> copyGridList(ArrayList<ArrayList<Spaceship>> originalGridList) {
+		int gridSize = originalGridList.size();
+		System.out.println(gridSize);
+		ArrayList<ArrayList<Spaceship>> newGridList = new ArrayList<ArrayList<Spaceship>>(originalGridList.size());
+		setGridList(newGridList);
+		for(int i = 0; i < newGridList.size(); i++) {
+			for(int j = 0; j < originalGridList.get(i).size(); j++) {
+				newGridList.get(i).add(originalGridList.get(i).get(j));
+			}
+		}
+		return newGridList;
+	}
+	
 	public static ArrayList<ArrayList<Spaceship>> setGridList(ArrayList<ArrayList<Spaceship>> gridList) {
 		ArrayList<Spaceship> button0List = new ArrayList<Spaceship>();
 		ArrayList<Spaceship> button1List = new ArrayList<Spaceship>();

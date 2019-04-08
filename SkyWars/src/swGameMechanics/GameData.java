@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -31,12 +33,15 @@ public class GameData {
 	private static boolean gameOver;
 	private static boolean usersGo;
 	private static int shipsDestroyed;
+	private static int goesTaken;
 	private static boolean masterShipOffensive;
 	private static boolean hardMode;
+	private static String usersName;
 	
 	public static void playGame() {
-		Music musicPlayer = new Music();
-		musicPlayer.playMusic("ImperialMarch.wav");
+		//Music musicPlayer = new Music();
+		//musicPlayer.playMusic("ImperialMarch.wav");
+		usersName = JOptionPane.showInputDialog("Enter your name", "Player 1");
 		gridList = new ArrayList<ArrayList<Spaceship>>(GRID_LENGTH);
 		gridList = GridList.setGridList(gridList);
 		player = new MasterShip();
@@ -55,11 +60,12 @@ public class GameData {
 		JRadioButton rdbtnHardMode = MainApp.getRdbtnHardMode();
 		rdbtnHardMode.setSelected(isHardMode());
 		shipsDestroyed = 0;
+		goesTaken = 0;
 		RenderButtons.mapButtonGridList(gridList);
 	}
 	
 	public static void saveGame() {
-		GameSave save = new GameSave(gridList, player, enemies, gameOver, usersGo, shipsDestroyed, masterShipOffensive, hardMode);
+		GameSave save = new GameSave(gridList, player, usersName, enemies, gameOver, usersGo, shipsDestroyed, goesTaken, masterShipOffensive, hardMode);
 		String fileName = "data.bin";
 		try {
 			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
@@ -91,14 +97,76 @@ public class GameData {
 		loadGameData(save);
 	}
 	
+	public static void saveInitialHighScore() {
+		HighScore currentGame = new HighScore(usersName, shipsDestroyed, goesTaken);
+		String fileName = "highScores.bin";
+		HighScores highScores = new HighScores(currentGame);
+		try {
+			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
+			os.writeObject(highScores);
+			os.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Done writing file");
+	}
+	
+	public static void saveHighScore() {
+		HighScore currentGame = new HighScore(usersName, shipsDestroyed, goesTaken);
+		String fileName = "highScores.bin";
+		HighScores highScores = loadHighScores();
+		highScores.getHighScores().add(currentGame);
+		try {
+			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
+			os.writeObject(highScores);
+			os.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Done writing file");
+	}
+	
+	public static HighScores loadHighScores() {
+		String fileName = "highScores.bin";
+		HighScores highScores = null;
+		try {
+			ObjectInputStream is = new ObjectInputStream(new FileInputStream(fileName));
+			highScores = (HighScores) is.readObject();
+			is.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Load complete");
+		return highScores;
+	}
+	
+	public static void showHighScores() {
+		HighScores highScores = loadHighScores();
+		String output = "";
+		for(HighScore score : highScores.getHighScores()) {
+			output += score.toString() + "\n";
+		}
+		JOptionPane.showMessageDialog(null, output, "High Scores", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	public static void loadGameData(GameSave save) {
+		//gridList = GridList.copyGridList(save.getGridList());
 		setGridList(save.getGridList());
 		setPlayer(save.getPlayer());
+		setUsersName(save.getUsersName());
 		setEnemies(save.getEnemies());
 		setGameOver(save.isGameOver());
-		System.out.println(save.isGameOver());
 		setUsersGo(save.isUsersGo());
 		setShipsDestroyed(save.getShipsDestroyed());
+		setGoesTaken(save.getGoesTaken());
 		setMasterShipOffensive(save.isMasterShipOffensive());
 		setHardMode(save.isHardMode());
 		RenderButtons.mapButtonGridList(gridList);
@@ -193,6 +261,7 @@ public class GameData {
 				enemy = list.get(i);
 				if(enemy != player) {
 					enemy.setDestroyed(true);
+					shipDestroyed();
 					list.remove(enemy);
 					enemies.remove(enemy);
 					output += enemy.getShipType();
@@ -208,7 +277,8 @@ public class GameData {
 			player.setDestroyed(true);
 			//list.remove(player);
 			output = "Game Over";
-			JOptionPane.showMessageDialog(null, output, "You Lose!", JOptionPane.INFORMATION_MESSAGE);
+			saveHighScore();
+			JOptionPane.showMessageDialog(null, output, "You Lose " + usersName + "!", JOptionPane.INFORMATION_MESSAGE);
 			RenderButtons.resetGrid();
 			resetGame();
 		}
@@ -216,7 +286,9 @@ public class GameData {
 	}
 	
 	public static void resetGame() {
-		gridList.clear();
+		for(int i = 0; i < gridList.size(); i++) {
+			gridList.get(i).clear();
+		}
 		player = null;
 		enemies.clear();
 		setGameOver(true);
@@ -226,10 +298,34 @@ public class GameData {
 		setHardMode(false);
 	}
 	
+	public static void goTaken() {
+		goesTaken++;
+	}
+	
+	public static void shipDestroyed() {
+		shipsDestroyed++;
+	}
+	
 	//**********************Getters and Setters*********************************************
 	
 	public static ArrayList<ArrayList<Spaceship>> getGridList() {
 		return gridList;
+	}
+
+	public static int getGoesTaken() {
+		return goesTaken;
+	}
+
+	public static void setGoesTaken(int goesTaken) {
+		GameData.goesTaken = goesTaken;
+	}
+
+	public static String getUsersName() {
+		return usersName;
+	}
+
+	public static void setUsersName(String usersName) {
+		GameData.usersName = usersName;
 	}
 
 	public static boolean isHardMode() {

@@ -39,6 +39,7 @@ public class GameButton extends JButton implements ActionListener {
 		boolean usersGo = GameData.isUsersGo();
 		boolean gameOver = GameData.isGameOver();
 		if(usersGo && movePossible && !gameOver) {
+			GameData.goTaken();
 			GameData.setUsersGo(false);
 			ArrayList<ArrayList<Spaceship>> gridList = GameData.getGridList();
 			ArrayList<Spaceship> enemies = GameData.getEnemies();
