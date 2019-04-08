@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
+import swInterface.MainApp;
 import swInterface.RenderButtons;
 import swShips.BattleCruiser;
 import swShips.BattleShooter;
@@ -40,6 +42,14 @@ public class GameData {
 		usersGo = true;
 		masterShipOffensive = false;
 		hardMode = false;
+		JRadioButton rdbtnDefensive = MainApp.getRdbtnDefensive();
+		rdbtnDefensive.setSelected(!isMasterShipOffensive());
+		JRadioButton rdbtnOffensive = MainApp.getRdbtnOffensive();
+		rdbtnOffensive.setSelected(isMasterShipOffensive());
+		JRadioButton rdbtnEasyMode = MainApp.getRdbtnEasyMode();
+		rdbtnEasyMode.setSelected(!isHardMode());
+		JRadioButton rdbtnHardMode = MainApp.getRdbtnHardMode();
+		rdbtnHardMode.setSelected(isHardMode());
 		shipsDestroyed = 0;
 		RenderButtons.mapButtonGridList(gridList);
 	}
@@ -88,7 +98,14 @@ public class GameData {
 		setMasterShipOffensive(save.isMasterShipOffensive());
 		setHardMode(save.isHardMode());
 		RenderButtons.mapButtonGridList(gridList);
-		
+		JRadioButton rdbtnDefensive = MainApp.getRdbtnDefensive();
+		rdbtnDefensive.setSelected(isMasterShipOffensive());
+		JRadioButton rdbtnOffensive = MainApp.getRdbtnOffensive();
+		rdbtnOffensive.setSelected(isMasterShipOffensive());
+		JRadioButton rdbtnEasyMode = MainApp.getRdbtnEasyMode();
+		rdbtnEasyMode.setSelected(isHardMode());
+		JRadioButton rdbtnHardMode = MainApp.getRdbtnHardMode();
+		rdbtnHardMode.setSelected(isHardMode());
 	}
 	
 	public static ArrayList<ArrayList<Spaceship>> randomEnemyShip(ArrayList<ArrayList<Spaceship>> gridList) {

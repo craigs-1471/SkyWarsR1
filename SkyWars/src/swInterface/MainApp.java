@@ -38,9 +38,11 @@ public class MainApp {
 	private static JButton btnNewGame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JLabel lblDifficulty;
-	private JRadioButton rdbtnHardMode;
-	private JRadioButton rdbtnEasyMode;
+	private static JRadioButton rdbtnHardMode;
+	private static JRadioButton rdbtnEasyMode;
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
+	private static JRadioButton rdbtnOffensive;
+	private static JRadioButton rdbtnDefensive;
 	
 
 	/**
@@ -164,7 +166,7 @@ public class MainApp {
 		btnLoadGame.setBounds(122, 13, 97, 25);
 		pnlOptionsPanel.add(btnLoadGame);
 		
-		JRadioButton rdbtnOffensive = new JRadioButton("Offensive");
+		rdbtnOffensive = new JRadioButton("Offensive");
 		rdbtnOffensive.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GameData.setMasterShipOffensive(true);
@@ -174,7 +176,7 @@ public class MainApp {
 		rdbtnOffensive.setBounds(456, 31, 127, 25);
 		pnlOptionsPanel.add(rdbtnOffensive);
 		
-		JRadioButton rdbtnDefensive = new JRadioButton("Defensive");
+		rdbtnDefensive = new JRadioButton("Defensive");
 		rdbtnDefensive.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GameData.setMasterShipOffensive(false);
@@ -354,4 +356,37 @@ public class MainApp {
 	public static void setBtnNewGame(JButton btnNewGame) {
 		MainApp.btnNewGame = btnNewGame;
 	}
+
+	public static JRadioButton getRdbtnHardMode() {
+		return rdbtnHardMode;
+	}
+
+	public static void setRdbtnHardMode(JRadioButton rdbtnHardMode) {
+		MainApp.rdbtnHardMode = rdbtnHardMode;
+	}
+
+	public static JRadioButton getRdbtnEasyMode() {
+		return rdbtnEasyMode;
+	}
+
+	public static void setRdbtnEasyMode(JRadioButton rdbtnEasyMode) {
+		MainApp.rdbtnEasyMode = rdbtnEasyMode;
+	}
+
+	public static JRadioButton getRdbtnOffensive() {
+		return rdbtnOffensive;
+	}
+
+	public static void setRdbtnOffensive(JRadioButton rdbtnOffensive) {
+		MainApp.rdbtnOffensive = rdbtnOffensive;
+	}
+
+	public static JRadioButton getRdbtnDefensive() {
+		return rdbtnDefensive;
+	}
+
+	public static void setRdbtnDefensive(JRadioButton rdbtnDefensive) {
+		MainApp.rdbtnDefensive = rdbtnDefensive;
+	}
+	
 }
