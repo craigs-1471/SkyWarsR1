@@ -12,6 +12,8 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
+import swAudio.Music;
+import swAudio.MusicPlayer;
 import swInterface.MainApp;
 import swInterface.RenderButtons;
 import swShips.BattleCruiser;
@@ -33,6 +35,8 @@ public class GameData {
 	private static boolean hardMode;
 	
 	public static void playGame() {
+		Music musicPlayer = new Music();
+		musicPlayer.playMusic("ImperialMarch.wav");
 		gridList = new ArrayList<ArrayList<Spaceship>>(GRID_LENGTH);
 		gridList = GridList.setGridList(gridList);
 		player = new MasterShip();

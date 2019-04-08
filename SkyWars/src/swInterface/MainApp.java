@@ -14,9 +14,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+
+import swAudio.Music;
+
 import javax.swing.ButtonGroup;
 
-public class MainApp {
+public class MainApp implements Runnable {
 
 	private JFrame frame;
 	private static GameButton btnGameButton0;
@@ -44,11 +47,8 @@ public class MainApp {
 	private static JRadioButton rdbtnOffensive;
 	private static JRadioButton rdbtnDefensive;
 	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
+	@Override
+	public void run() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -59,6 +59,16 @@ public class MainApp {
 				}
 			}
 		});
+		
+	}
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		Thread t1 = new Thread(new MainApp());
+		//Thread t2 = new Thread(new Music());
+		t1.start();
 	}
 
 	/**
@@ -388,5 +398,4 @@ public class MainApp {
 	public static void setRdbtnDefensive(JRadioButton rdbtnDefensive) {
 		MainApp.rdbtnDefensive = rdbtnDefensive;
 	}
-	
 }
