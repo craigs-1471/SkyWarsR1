@@ -199,18 +199,19 @@ public class GameData {
 					JOptionPane.showMessageDialog(null, output, "Enemy Ship Destroyed", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
+			gridList.set(playerLocation, list);
+			setGridList(gridList);
+			setEnemies(enemies);
+			return gridList;
 		}
 		else if(list.size() > shipsRequiredToDestroyPlayer) {
 			player.setDestroyed(true);
-			list.remove(player);
+			//list.remove(player);
 			output = "Game Over";
 			JOptionPane.showMessageDialog(null, output, "You Lose!", JOptionPane.INFORMATION_MESSAGE);
 			RenderButtons.resetGrid();
 			resetGame();
 		}
-		gridList.set(playerLocation, list);
-		setGridList(gridList);
-		setEnemies(enemies);
 		return gridList;
 	}
 	

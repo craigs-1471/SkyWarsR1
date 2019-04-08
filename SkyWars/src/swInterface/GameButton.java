@@ -32,6 +32,7 @@ public class GameButton extends JButton implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		setFocusPainted(false);
 		Spaceship player = GameData.getPlayer();
 		int currentLocation = player.getCurrentLocation();
 		movePossible = PossibleMoves.isMovePossible(currentLocation, possibleMoves);
